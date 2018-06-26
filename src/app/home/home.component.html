@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Details</h4>
+          <form>
+            <div class="form-group">
+              <label>xPubKey</label>
+              <input type="text" class="form-control" [(ngModel)]="xPubKey" name="xPubKey">
+            </div>
+            <div class="form-group">
+                <label>Max Address</label>
+                <input type="text" class="form-control" [(ngModel)]="addressCount" name="addressCount">
+              </div>
+            <div class="form-group">
+              <button class="btn btn-primary pull-right" (click)="monitor()">Monitor</button>
+              <div class="clearfix"></div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-8">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Addressses</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Index</th>
+                  <th>Address</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="isLoading">
+                <tr>
+                  <td colspan="3">
+                    <div class="text-center">Loading...</div>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="wallet.length > 0 && !isLoading">
+                <tr *ngFor="let w of wallet" [ngClass]="{'bg-success': (w.currentBalance > w.prevBalance), 'bg-danger': (w.currentBalance < w.prevBalance)}">
+                  <td>{{w.index}}</td>
+                  <td>{{w.address}}</td>
+                  <td>
+                    <span [ngClass]="{'text-success': (w.status === 'up'), 'text-danger': (w.status === 'down')}">{{w.currentBalance}}</span>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Total</th>
+                  <th>{{total}}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
